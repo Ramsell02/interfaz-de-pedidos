@@ -1,0 +1,43 @@
+{
+  "Users": [
+    {
+      "id": "b2c0",
+      "nombre": "ramsell",
+      "cedula": "12345678",
+      "correo": "ramsell02@hotmail.com",
+      "numeroTel": "12345678",
+      "contrasena": "12345678",
+      "rol": "Cliente"
+    },
+    {
+      "id": "2172",
+      "nombre": "ramsell",
+      "cedula": "12345678",
+      "correo": "ramsell01@hotmail.com",
+      "numeroTel": "12345678",
+      "contrasena": "12345678",
+      "rol": "Cliente"
+    },
+    {
+      "id": "b2c0",
+      "nombre": "Admin",
+      "cedula": "12345678",
+      "correo": "Admin@hotmail.com",
+      "numeroTel": "12345678",
+      "contrasena": "12345678",
+      "rol": "Administrador"
+    }
+  ],
+  "Products": [
+    {
+      "id": "59ca",
+      "nombre": "asdfgfdsa",
+      "cantidad": "123",
+      "imagen": "https://res.cloudinary.com/dim3fm4el/image/upload/v1758917978/uq2vlpisr5r0wwyc6mhd.jpg",
+      "comentario": "dqwdwefawe",
+      "userId": "b2c0"
+    }
+  ],
+  "MetodosdePago": [],
+  "Facturacion": []
+}
