@@ -2,15 +2,14 @@ import React from 'react'
 import Swal from 'sweetalert2'
 import ServicesProducts from '../../services/ServicesProducts'
 
-function GetProducts({ VerProductos, setVerProductos }) {
+function GetProducts({ VerProductos, setVerProductos,rol}) {
 
-  console.log(VerProductos);
+  console.log(rol);
+  
 
+  
 
-
-
- 
- /// Función para editar un pedido
+  /// Función para editar un pedido
   const editarPedido = async (product) => {
     const { value: valores } = await Swal.fire({
       title: "Editar pedido",
@@ -80,30 +79,33 @@ function GetProducts({ VerProductos, setVerProductos }) {
       }
     }
 
-  
+
   }
-   const EliminarPedido = async (product) => {
-  const result = await Swal.fire({
-    title: "¿Estás seguro?",
-    text: "¡No podrás revertir esta acción!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Sí, eliminar",
-    cancelButtonText: "Cancelar",
-  });
+  const EliminarPedido = async (product) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¡No podrás revertir esta acción!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
 
-  if (result.isConfirmed) {
-    try {
-      await ServicesProducts.deleteProducts(product.id);
+    if (result.isConfirmed) {
+      try {
+        await ServicesProducts.deleteProducts(product.id);
 
-      setVerProductos((prev) => prev.filter((p) => p.id !== product.id));
+        setVerProductos((prev) => prev.filter((p) => p.id !== product.id));
 
-      Swal.fire("¡Eliminado!", "El pedido fue borrado con éxito", "success");
-    } catch (error) {
-      Swal.fire("Error", "No se pudo eliminar el pedido", "error");
+        Swal.fire("¡Eliminado!", "El pedido fue borrado con éxito", "success");
+      } catch (error) {
+        Swal.fire("Error", "No se pudo eliminar el pedido", "error");
+      }
     }
-  }
-};
+  };
+
+
+  
   return (
     <div>
       <h2>Mis pedidos</h2>
@@ -114,8 +116,19 @@ function GetProducts({ VerProductos, setVerProductos }) {
           <p>{infoPro.comentario}</p>
           <img src={infoPro.imagen} alt="IMG Bucket" width={"200px"} />
           <div className="task-actions" >
-            <button className="edit" onClick={() => editarPedido(infoPro)}>Editar</button>
-            <button className="delete" onClick={() =>EliminarPedido (infoPro)}>Eliminar</button>
+            
+            {rol === "Cliente" ? (
+              <>
+                <button className="edit" onClick={() => editarPedido(infoPro)}>Editar</button>
+                <button className="delete" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
+              </>
+            ) : rol === "Administrador" ? (
+              <>
+                <input type="checkbox" />
+                <button className="delete" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
+              </>
+            ) : null}
+
           </div>
         </li>
       ))}

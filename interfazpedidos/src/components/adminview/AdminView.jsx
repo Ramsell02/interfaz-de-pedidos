@@ -17,7 +17,9 @@ function AdminView({ VerProductos, setVerProductos }) {
  
  
     return (
-    <div>hola</div>
+    <div>
+      
+    </div>
   )
 }
 

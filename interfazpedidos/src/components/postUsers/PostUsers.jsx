@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import ServicesUsers from '../../services/ServicesUsers'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import GetProducts from '../getproducts/GetProducts'
+
 function PostUsers() {
  const navegar = useNavigate()
   const [NuevoNombre, setNuevoNombre] = useState("")
@@ -10,7 +12,7 @@ function PostUsers() {
   const [NuevoNumero, setNuevoNumero] = useState("")
   const [NuevoCorreo, setNuevoCorreo] = useState("")
   const [NuevaContrasena, setNuevaContrasena] = useState("")
-
+ 
 
 
 
@@ -97,6 +99,7 @@ function PostUsers() {
         <input type="text" id='contrasena' placeholder='Contraseña' value={NuevaContrasena} onChange={(n) => setNuevaContrasena(n.target.value)} />
         <br />
         <button className="btn-primary" onClick={agregarUsuario}>Crear Usuario</button>
+
       </div>
     </div>
   )

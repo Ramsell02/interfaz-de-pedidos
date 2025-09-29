@@ -1,10 +1,12 @@
 import React from 'react'
-import PostProducts from '../components/postproducts/PostProducts'
+import AdminGet from '../components/adminget/AdminGet'
+import AdminCarousel from '../components/adminCarousel/AdminCarousel'
 function AdminDash() {
   return (
     <div>
-      HOLAAAAAAA
-      <PostProducts/>
+      <AdminGet/>
+      <AdminCarousel/>
+      
    
     </div>
 

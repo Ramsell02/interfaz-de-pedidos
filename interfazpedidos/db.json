@@ -10,15 +10,6 @@
       "rol": "Cliente"
     },
     {
-      "id": "2172",
-      "nombre": "ramsell",
-      "cedula": "12345678",
-      "correo": "ramsell01@hotmail.com",
-      "numeroTel": "12345678",
-      "contrasena": "12345678",
-      "rol": "Cliente"
-    },
-    {
       "id": "b2c0",
       "nombre": "Admin",
       "cedula": "12345678",
@@ -26,6 +17,15 @@
       "numeroTel": "12345678",
       "contrasena": "12345678",
       "rol": "Administrador"
+    },
+    {
+      "id": "3233",
+      "nombre": "ramsell",
+      "cedula": "12345678",
+      "correo": "ramsell01@hotmail.com",
+      "numeroTel": "12345678",
+      "contrasena": "12345678",
+      "rol": "Cliente"
     }
   ],
   "Products": [
@@ -39,5 +39,12 @@
     }
   ],
   "MetodosdePago": [],
-  "Facturacion": []
+  "Slides": [
+    {
+      "id": "140f",
+      "image": "https://res.cloudinary.com/dim3fm4el/image/upload/v1759176104/wpeqlbbitxmmh1qns2fg.jpg",
+      "price": "323332",
+      "stock": "32"
+    }
+  ]
 }

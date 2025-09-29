@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import Swal from 'sweetalert2'
 import ServicesProducts from '../../services/ServicesProducts'
 import GetProducts from '../getproducts/GetProducts'
-import AdminView from '../adminview/AdminView'
+import AdminGet from '../adminget/AdminGet'
 
 function PostProducts() {
   const [NuevoProducto, setNuevoProducto] = useState("")
@@ -10,7 +10,7 @@ function PostProducts() {
   const [NuevoComentario, setNuevoComentario] = useState("")
   const [VerProductos, setVerProductos] = useState([])
   const ordenPersonal = JSON.parse(localStorage.getItem("token"))
-  console.log(ordenPersonal.id);
+  console.log(ordenPersonal.rol);
 
 
   useEffect(() => {
@@ -160,8 +160,8 @@ function PostProducts() {
 
         <button onClick={SubirPedido}>Crear Pedido</button>
       </div>
-      <GetProducts VerProductos={VerProductos} setVerProductos={setVerProductos} />
-      
+      <GetProducts VerProductos={VerProductos} setVerProductos={setVerProductos} rol={ordenPersonal.rol}/>
+      <AdminGet VerProductos={VerProductos} setVerProductos={setVerProductos} rol={ordenPersonal.rol}/>
     </div>
   )
 }
