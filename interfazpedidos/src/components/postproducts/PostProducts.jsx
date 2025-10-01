@@ -1,125 +1,162 @@
-import React, { useState, useRef, useEffect } from 'react'
-import Swal from 'sweetalert2'
-import ServicesProducts from '../../services/ServicesProducts'
-import GetProducts from '../getproducts/GetProducts'
-import AdminGet from '../adminget/AdminGet'
+import React, { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import ServicesProducts from "../../services/ServicesProducts";
+import GetProducts from "../getproducts/GetProducts";
 
 function PostProducts() {
-  const [NuevoProducto, setNuevoProducto] = useState("")
-  const [NuevaCantidad, setNuevaCantidad] = useState("")
-  const [NuevoComentario, setNuevoComentario] = useState("")
-  const [VerProductos, setVerProductos] = useState([])
-  const ordenPersonal = JSON.parse(localStorage.getItem("token"))
-  console.log(ordenPersonal.rol);
+  const [NuevoProducto, setNuevoProducto] = useState("");
+  const [NuevaCantidad, setNuevaCantidad] = useState("");
+  const [NuevoComentario, setNuevoComentario] = useState("");
+  const [VerProductos, setVerProductos] = useState([]);
 
+  const ordenPersonal = JSON.parse(localStorage.getItem("token"));
 
   useEffect(() => {
     const fecthProductos = async () => {
       try {
-        const callProducts = await ServicesProducts.getProducts()
-        console.log(callProducts);
-
-
-        setVerProductos(callProducts)
-        console.log(VerProductos);
-        console.log(callProducts);
-
-         const productosFiltrados = callProducts.filter(
-          p => p.userId === ordenPersonal.id
-        )
-        setVerProductos(productosFiltrados) 
-
-
+        const callProducts = await ServicesProducts.getProducts();
+        const productosFiltrados = callProducts.filter(
+          (p) => p.userId === ordenPersonal.id
+        );
+        setVerProductos(productosFiltrados);
       } catch (error) {
-        console.error("Error al traer los pedidos del servicio", error)
+        console.error("Error al traer los pedidos del servicio", error);
       }
-    }
-    fecthProductos()
-  }, [ordenPersonal.id])
+    };
+    fecthProductos();
+  }, [ordenPersonal.id]);
 
-  console.log(VerProductos);
-
-
-
-
-
-
-
-
-  // Referencias a los inputs (uno para galería y otro para cámara)
-  const inputGaleriaRef = useRef(null)
-  const inputCamaraRef = useRef(null)
-
-  // 🔥 Subir a Cloudinary
+  //  Subir a Cloudinary
   const subirACloudinary = async (file) => {
-    const data = new FormData()
-    data.append("file", file)
-    data.append("upload_preset", "pedidos_app")
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "pedidos_app");
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dim3fm4el/image/upload", {
-      method: "POST",
-      body: data
-    })
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dim3fm4el/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
 
-    const fileData = await res.json()
-    return fileData.secure_url // URL de la imagen
-  }
+    const fileData = await res.json();
+    return fileData.secure_url;
+  };
 
+  //  Preguntar al usuario: cámara o galería
   const SubirPedido = async () => {
     if (!NuevoProducto || !NuevaCantidad) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Datos vacíos, revise los datos',
-      })
-      return
+        icon: "error",
+        title: "Oops...",
+        text: "Datos vacíos, revise los datos",
+      });
+      return;
     }
 
-   // Preguntar al usuario cómo quiere subir la foto
     const { value: opcion } = await Swal.fire({
-      title: "Selecciona una opción",
-      text: "¿Cómo quieres añadir la foto del producto?",
+      title: "Elige cómo añadir la foto",
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: "📷 Tomar foto",
+      confirmButtonText: "📷 Usar cámara",
       denyButtonText: "🖼️ Subir desde galería",
-      cancelButtonText: "Cancelar"
-    })
+      cancelButtonText: "Cancelar",
+    });
 
     if (opcion === true) {
-      // Cámara
-      inputCamaraRef.current.click()
+      abrirCamara(); //  cámara en SweetAlert
     } else if (opcion === false) {
-      // Galería
-      inputGaleriaRef.current.click()
+      abrirGaleria(); //  input file oculto
     }
-  }
+  };
 
+  //  Capturar con cámara dentro de SweetAlert2
+  const abrirCamara = () => {
+    let streamRef = null;
+    Swal.fire({
+      title: "📸 Captura tu producto",
+      html: `
+        <video id="videoCam" autoplay playsinline style="width:100%; border-radius:8px;"></video>
+        <canvas id="canvasCam" style="display:none;"></canvas>
+      `,
+      showCancelButton: true,
+      confirmButtonText: "Capturar",
+      cancelButtonText: "Cancelar",
+      didOpen: async () => {
+        const video = document.getElementById("videoCam");
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          streamRef = stream;
+          video.srcObject = stream;
+        } catch (err) {
+          console.error("Error al acceder a la cámara:", err);
+          Swal.showValidationMessage("No se pudo acceder a la cámara");
+        }
+      },
+      preConfirm: () => {
+        const video = document.getElementById("videoCam");
+        const canvas = document.getElementById("canvasCam");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        return new Promise((resolve) => {
+          canvas.toBlob((blob) => resolve(blob), "image/jpeg");
+        });
+      },
+       willClose: () => {
+      //  detener la cámara al cerrar el Swal
+      if (streamRef) {
+        streamRef.getTracks().forEach((track) => track.stop());
+      }
+    },
+    }).then((result) => {
+      if (result.isConfirmed && result.value) {
+        procesarPedido(result.value);
+      }
+    });
+  };
+
+  //  Subir desde galería (input invisible)
+  const abrirGaleria = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = (e) => {
+      if (e.target.files[0]) {
+        procesarPedido(e.target.files[0]);
+      }
+    };
+    input.click();
+  };
+
+  // Procesar pedido y guardar
   const procesarPedido = async (file) => {
     try {
-      // Subir a Cloudinary
-      const urlImagen = await subirACloudinary(file)
+      const urlImagen = await subirACloudinary(file);
 
       const Newproduct = {
         nombre: NuevoProducto,
         cantidad: NuevaCantidad,
-        imagen: urlImagen,   //  ahora se guarda la URL en db.json
+        imagen: urlImagen,
         comentario: NuevoComentario,
-        userId: ordenPersonal.id
-      }
+        userId: ordenPersonal.id,
+        userName: ordenPersonal.nombre,
+      };
 
-      const creado= await ServicesProducts.postProducts(Newproduct)
+      const creado = await ServicesProducts.postProducts(Newproduct);
+      setVerProductos((prev) => [...prev, creado]);
 
-      setVerProductos(prev => [...prev, creado])
+      setNuevoProducto("");
+      setNuevaCantidad("");
+      setNuevoComentario("");
 
-
-      setNuevoProducto("")
-      setNuevaCantidad("")
-      setNuevoComentario("")
       Swal.fire({
-        title: "Pedido realizado",
+        title: "✅ Pedido realizado",
         html: `
-          <p>Pedido realizado con éxito!</p>
           <p><strong>Nombre:</strong> ${NuevoProducto}</p>
           <p><strong>Cantidad:</strong> ${NuevaCantidad}</p>
           <p><strong>Comentario:</strong> ${NuevoComentario}</p>
@@ -127,44 +164,44 @@ function PostProducts() {
         `,
         icon: "success",
         confirmButtonText: "Continuar",
-      })
+      });
     } catch (err) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error al subir',
-        text: 'No se pudo guardar el producto',
-      })
+        icon: "error",
+        title: "Error al subir",
+        text: "No se pudo guardar el producto",
+      });
     }
-  }
+  };
 
   return (
     <div>
       <div>
         <label htmlFor="nombre">Nombre del producto</label>
         <br />
-        <input type="text" id='nombre' placeholder='Nombre del producto' value={NuevoProducto} onChange={(n) => setNuevoProducto(n.target.value)} />
+        <input type="text" id="nombre" placeholder="Nombre del producto" value={NuevoProducto}  onChange={(n) => setNuevoProducto(n.target.value)}
+        />
         <br />
         <label htmlFor="cantidad">Cantidad deseada</label>
         <br />
-        <input type="number" id='cantidad' placeholder='Cantidad' value={NuevaCantidad} onChange={(n) => setNuevaCantidad(n.target.value)} />
+        <input type="number"  id="cantidad" placeholder="Cantidad"  value={NuevaCantidad}  onChange={(n) => setNuevaCantidad(n.target.value)}
+        />
         <br />
         <label htmlFor="comentario">Comentario (opcional)</label>
         <br />
-        <textarea name="comentario" id="comentario" value={NuevoComentario} onChange={(n) => setNuevoComentario(n.target.value)} />
+        <textarea
+          id="comentario"
+          value={NuevoComentario}
+          onChange={(n) => setNuevoComentario(n.target.value)}
+        />
         <br />
 
-        {/* Inputs ocultos para cámara y galería */}
-        <input type="file" accept="image/*" style={{ display: "none" }} ref={inputGaleriaRef} onChange={(e) => procesarPedido(e.target.files[0])} />
-
-        <input type="file" accept="image/*" capture="environment" style={{ display: "none" }} ref={inputCamaraRef} onChange={(e) => procesarPedido(e.target.files[0])} />
-
-        <button onClick={SubirPedido}>Crear Pedido</button>
+        <button onClick={SubirPedido}> Crear Pedido</button>
       </div>
-      <GetProducts VerProductos={VerProductos} setVerProductos={setVerProductos} rol={ordenPersonal.rol}/>
-      <AdminGet VerProductos={VerProductos} setVerProductos={setVerProductos} rol={ordenPersonal.rol}/>
+
+      <GetProducts VerProductos={VerProductos} setVerProductos={setVerProductos}  rol={ordenPersonal.rol}  />
     </div>
-  )
+  );
 }
 
-export default PostProducts
-
+export default PostProducts;

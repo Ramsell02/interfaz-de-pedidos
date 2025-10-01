@@ -30,15 +30,24 @@
   ],
   "Products": [
     {
-      "id": "59ca",
-      "nombre": "asdfgfdsa",
+      "id": "6d35",
+      "nombre": "ejemplo1",
+      "cantidad": "12",
+      "imagen": "https://res.cloudinary.com/dim3fm4el/image/upload/v1759339508/y2okybbq4ovqv3rdcstt.jpg",
+      "comentario": "1",
+      "userId": "b2c0",
+      "userName": "ramsell"
+    },
+    {
+      "id": "5d33",
+      "nombre": "ejemplo2",
       "cantidad": "123",
-      "imagen": "https://res.cloudinary.com/dim3fm4el/image/upload/v1758917978/uq2vlpisr5r0wwyc6mhd.jpg",
-      "comentario": "dqwdwefawe",
-      "userId": "b2c0"
+      "imagen": "https://res.cloudinary.com/dim3fm4el/image/upload/v1759339543/vg1zbzrbkkoxecemyw5j.jpg",
+      "comentario": "2erer",
+      "userId": "b2c0",
+      "userName": "ramsell"
     }
   ],
-  "MetodosdePago": [],
   "Slides": [
     {
       "id": "140f",

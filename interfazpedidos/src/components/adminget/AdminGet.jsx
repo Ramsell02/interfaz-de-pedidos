@@ -1,42 +1,44 @@
-import React, {   useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import GetProducts from '../getproducts/GetProducts'
 import ServicesProducts from '../../services/ServicesProducts'
 
 
 
 
-function AdminGet({ VerProductos, setVerProductos,rol}) {
-  const ordenPersonal = JSON.parse(localStorage.getItem("token"))
-  
-   useEffect(() => {
-      const fecthProductos = async () => {
-        try {
-          const callProducts = await ServicesProducts.getProducts()
-          console.log(callProducts);
-  
-  
-          setVerProductos(callProducts)
-          console.log(VerProductos);
-          console.log(callProducts);
-  
-        
-          setVerProductos(productosFiltrados) 
-  
-  
-        } catch (error) {
-          console.error("Error al traer los pedidos del servicio", error)
-        }
+function AdminGet() {
+ 
+
+   const [VerProductos, setVerProductos] = useState([])
+
+   const ordenPersonal = JSON.parse(localStorage.getItem("token"))
+   console.log(ordenPersonal.rol);
+ 
+
+  useEffect(() => {
+    const fecthProductos = async () => {
+      try {
+        const callProducts = await ServicesProducts.getProducts()
+        console.log(callProducts);
+
+        setVerProductos(callProducts);
+      } catch (error) {
+        console.error("Error al traer los pedidos del servicio", error)
       }
-      fecthProductos()
-    }, [])
-  
-  
-  
-  
-  
-  
-    return (
-    <div></div>
+    }
+    fecthProductos()
+  }, [setVerProductos])
+
+
+
+
+
+
+  return (
+    <div>
+      
+
+      <GetProducts VerProductos={VerProductos} setVerProductos={setVerProductos} rol={ordenPersonal.rol}/>
+    </div>
   )
 }
 
