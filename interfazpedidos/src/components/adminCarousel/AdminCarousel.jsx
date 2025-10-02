@@ -128,12 +128,7 @@ function AdminCarousel() {
         <div className="mb-3">
           <label className="form-label">Precio</label>
           <input
-            type="number"
-            className="form-control"
-            name="price"
-            value={nuevoSlide.price}
-            onChange={handleChange}
-            placeholder="₡"
+            type="number" className="form-control"  name="price"  value={nuevoSlide.price}  onChange={handleChange}  placeholder="₡"
           />
         </div>
 

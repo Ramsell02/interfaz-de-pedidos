@@ -1,8 +1,9 @@
 import React from "react";
-import { Phone, User } from "lucide-react"; // opcional para iconos
+import { Phone, User } from "lucide-react"; //para los iconos
 import fondo from "../../img/fondo.jpg";
-import "./LandingHero.css"; // importamos el CSS externo
+import "./LandingHero.css"; 
 import { useNavigate } from "react-router-dom";
+import Footer from "../footer/Footer";
 
 function Landing() {
 const navegar = useNavigate()
@@ -10,7 +11,15 @@ const navegar = useNavigate()
 
   navegar("/Register")
  }
- 
+  function irLogin() {
+    navegar("/Login");
+  }
+  function irAbajo() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth", // para que baje suave
+    });
+  }
  
   return (
     <div className="hero-container">
@@ -23,8 +32,8 @@ const navegar = useNavigate()
 
       {/* Íconos arriba a la derecha */}
       <div className="hero-icons">
-        <Phone className="icon" />
-        <User className="icon" />
+        <Phone className="icon" onClick={ irAbajo}/>
+        <User className="icon" onClick={irLogin} />
       </div>
 
       {/* Caja izquierda */}
