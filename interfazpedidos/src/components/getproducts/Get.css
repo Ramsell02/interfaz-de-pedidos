@@ -1,0 +1,91 @@
+/* Sección general debajo del carrusel */
+.seccion-productos {
+  padding: 20px;
+  background: linear-gradient(to right, #fff3e0, #ffe0b2);
+  border-radius: 10px;
+  margin-top: 20px; /* espacio respecto al carrusel */
+}
+
+/* Grid de productos: máximo 4 columnas */
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* Tarjeta de producto */
+.card-producto {
+  list-style: none;
+  background: #fff7f0;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.card-producto p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Nombre resaltado */
+.nombre-producto {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ff9500;
+}
+
+/* Imagen */
+.card-producto img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+/* Acciones */
+.acciones-producto {
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Botones */
+.btn-editar {
+  background: #ff9500;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.btn-editar:hover {
+  background: #e68500;
+}
+
+.btn-eliminar {
+  background: black;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-eliminar:hover {
+  background: #333;
+}

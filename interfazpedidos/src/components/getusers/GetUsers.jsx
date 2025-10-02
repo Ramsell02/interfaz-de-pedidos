@@ -2,7 +2,7 @@ import { useState,useEffect } from 'react'
 import ServicesUsers from '../../services/ServicesUsers'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
-
+import "./get.css";
 
 function GetUser() {
   const navegar = useNavigate()

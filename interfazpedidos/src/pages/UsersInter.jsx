@@ -6,9 +6,13 @@ import Footer from '../components/footer/Footer'
 function UsersInter() {
   return (
     <div>
+      
       <Carousel/>
+     
       <PostProducts />
+     
       <GetProducts />
+    
       <Footer />
     </div>
   )

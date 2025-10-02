@@ -1,10 +1,10 @@
 import React from 'react'
 import Swal from 'sweetalert2'
 import ServicesProducts from '../../services/ServicesProducts'
-
+import "./Get.css";
 function GetProducts({ VerProductos, setVerProductos, rol }) {
 
-  
+
 
 
 
@@ -108,35 +108,33 @@ function GetProducts({ VerProductos, setVerProductos, rol }) {
 
   return (
     <div>
-      
-      <div>
 
-
-        {Array.isArray(VerProductos) && VerProductos.map((infoPro) => (
-          <li key={infoPro.id}>
-            <p>{infoPro.nombre}</p>
-            <p>{infoPro.cantidad}</p>
-            <p>{infoPro.comentario}</p>
-            <img src={infoPro.imagen} alt="IMG Bucket" width={"200px"} />
-            <div className="task-actions" >
-
-              {rol === "Cliente" ? (
-                <>
-                  <button className="edit" onClick={() => editarPedido(infoPro)}>Editar</button>
-                  <button className="delete" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
-                </>
-              ) : rol === "Administrador" ? (
-                <>
-                  <input type="checkbox" />
-                  <button className="delete" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
-                </>
-              ) : null}
-
-            </div>
-          </li>
-        ))}
-
+      <div className="seccion-productos">
+        <div className="grid-productos">
+          {Array.isArray(VerProductos) && VerProductos.map((infoPro) => (
+            <li key={infoPro.id} className="card-producto">
+              <p className="nombre-producto">{infoPro.nombre}</p>
+              <p>{infoPro.cantidad}</p>
+              <p>{infoPro.comentario}</p>
+              <img src={infoPro.imagen} alt="IMG Bucket" />
+              <div className="acciones-producto">
+                {rol === "Cliente" ? (
+                  <>
+                    <button className="btn-editar" onClick={() => editarPedido(infoPro)}>Editar</button>
+                    <button className="btn-eliminar" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
+                  </>
+                ) : rol === "Administrador" ? (
+                  <>
+                    <input type="checkbox" />
+                    <button className="btn-eliminar" onClick={() => EliminarPedido(infoPro)}>Eliminar</button>
+                  </>
+                ) : null}
+              </div>
+            </li>
+          ))}
+        </div>
       </div>
+
     </div>
 
   )

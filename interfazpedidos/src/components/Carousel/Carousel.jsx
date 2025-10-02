@@ -26,7 +26,7 @@ function CarouselApp() {
             className="d-block w-100"
             src={item.image}
             alt={`Slide ${item.id}`}
-            style={{ maxHeight: "500px", objectFit: "cover" }}
+            style={{ Height: "500px", objectFit: "cover" }}
           />
           <Carousel.Caption>
             <h3>₡{item.price}</h3>

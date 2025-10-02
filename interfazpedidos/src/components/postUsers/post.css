@@ -1,0 +1,101 @@
+/* Contenedor general para centrar */
+body, html {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #fff3e0, #ffe0b2); /* fondo cálido */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.postuser-container {
+  width: 400px;
+  padding: 2rem;
+  background: #fff7f0;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  text-align: center; /* centra textos */
+}
+
+.postuser-container h2 {
+  color: #ff9500;
+  margin-bottom: 1.5rem;
+}
+
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra inputs */
+  
+}
+
+.form-grid label:first-child {
+  margin-top: 10px; /* baja el primer input */
+}
+
+.form-grid label {
+  align-self: flex-start; /* que las etiquetas no queden flotando en medio */
+  color: #333;
+  font-weight: 600;
+  margin: 4px 0 1px;
+}
+
+.form-grid input {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.form-grid input:focus {
+  outline: none;
+  border-color: #ff9500;
+  box-shadow: 0 0 6px rgba(255, 149, 0, 0.4);
+}
+
+.btn-primary {
+  background: #ff9500;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: #e68500;
+}
+
+.postuser-container p {
+  margin-top: 1rem;
+  font-size: 8px;
+  color: #444;
+}
+
+.postuser-container button:last-child {
+  background: black;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+  margin-top: 8px;
+}
+
+.postuser-container button:last-child:hover {
+  background: #333;
+}
+.postuser-container h2 {
+  margin-bottom: 1.5rem; /* da espacio antes del primer input */
+}
